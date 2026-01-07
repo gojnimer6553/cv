@@ -73,12 +73,15 @@ jobs:
 
       - name: Generate metadata
         run: |
+          # Escape commit message for JSON
+          COMMIT_MSG=$(echo '${{ github.event.head_commit.message }}' | head -1 | jq -Rs .)
+
           cat > artifacts/metadata.json << EOF
           {
             "build_time": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
             "commit_sha": "${{ github.sha }}",
             "commit_short": "${GITHUB_SHA:0:7}",
-            "commit_message": $(echo '${{ github.event.head_commit.message }}' | jq -Rs .),
+            "commit_message": ${COMMIT_MSG},
             "ref": "${{ github.ref }}",
             "ref_name": "${{ github.ref_name }}",
             "actor": "${{ github.actor }}",
