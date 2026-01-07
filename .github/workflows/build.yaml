@@ -21,13 +21,13 @@ on:
         value: John_Doe_CV.pdf
       pt-pdf-name:
         description: "Filename of the Portuguese CV PDF"
-        value: João_Silva_CV.pdf
+        value: Joao_Silva_CV.pdf
       en-html-name:
         description: "Filename of the English CV HTML"
         value: John_Doe_CV.html
       pt-html-name:
         description: "Filename of the Portuguese CV HTML"
-        value: João_Silva_CV.html
+        value: Joao_Silva_CV.html
 
 jobs:
   build:
