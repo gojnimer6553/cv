@@ -178,6 +178,7 @@ jobs:
         env:
           EN_PDF: ${{ needs.build.outputs.en-pdf-name }}
           PT_PDF: ${{ needs.build.outputs.pt-pdf-name }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create "${{ steps.tag.outputs.tag }}" \
             --title "CV Release ${{ steps.tag.outputs.tag }}" \
@@ -187,8 +188,6 @@ jobs:
             "release/${EN_PDF}" \
             "release/${PT_PDF}" \
             "release/README.txt"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Release summary
         env:
