@@ -68,7 +68,7 @@ jobs:
           EN_PDF: ${{ needs.build.outputs.en-pdf-name }}
           PT_PDF: ${{ needs.build.outputs.pt-pdf-name }}
         run: |
-          cat > public/index.html << 'INDEXEOF'
+          cat > public/index.html << EOF
           <!DOCTYPE html>
           <html lang="en">
           <head>
@@ -202,20 +202,12 @@ jobs:
                       if (langParam) {
                           const fileMap = {
                               'en': {
-                                  'html': 'INDEXEOF
-          echo "                                  'html': '${EN_HTML}'," >> public/index.html
-          cat >> public/index.html << 'INDEXEOF'
-                                  'pdf': 'INDEXEOF
-          echo "                                  'pdf': '${EN_PDF}'" >> public/index.html
-          cat >> public/index.html << 'INDEXEOF'
+                                  'html': '${EN_HTML}',
+                                  'pdf': '${EN_PDF}'
                               },
                               'pt': {
-                                  'html': 'INDEXEOF
-          echo "                                  'html': '${PT_HTML}'," >> public/index.html
-          cat >> public/index.html << 'INDEXEOF'
-                                  'pdf': 'INDEXEOF
-          echo "                                  'pdf': '${PT_PDF}'" >> public/index.html
-          cat >> public/index.html << 'INDEXEOF'
+                                  'html': '${PT_HTML}',
+                                  'pdf': '${PT_PDF}'
                               }
                           };
 
@@ -234,14 +226,10 @@ jobs:
                   <div class="language-section">
                       <div class="language-title"><span class="flag">🇺🇸</span> English</div>
                       <div class="button-group">
-                          <a href="INDEXEOF
-          echo "                          <a href=\"${EN_HTML}\" class=\"btn\" aria-label=\"View English CV in HTML\">" >> public/index.html
-          cat >> public/index.html << 'INDEXEOF'
+                          <a href="${EN_HTML}" class="btn" aria-label="View English CV in HTML">
                               📄 View HTML
                           </a>
-                          <a href="INDEXEOF
-          echo "                          <a href=\"${EN_PDF}\" class=\"btn btn-secondary\" aria-label=\"View English CV in PDF\">" >> public/index.html
-          cat >> public/index.html << 'INDEXEOF'
+                          <a href="${EN_PDF}" class="btn btn-secondary" aria-label="View English CV in PDF">
                               📑 Download PDF
                           </a>
                       </div>
@@ -250,14 +238,10 @@ jobs:
                   <div class="language-section">
                       <div class="language-title"><span class="flag">🇧🇷</span> Português</div>
                       <div class="button-group">
-                          <a href="INDEXEOF
-          echo "                          <a href=\"${PT_HTML}\" class=\"btn\" aria-label=\"Ver CV em Português em HTML\">" >> public/index.html
-          cat >> public/index.html << 'INDEXEOF'
+                          <a href="${PT_HTML}" class="btn" aria-label="Ver CV em Português em HTML">
                               📄 Ver HTML
                           </a>
-                          <a href="INDEXEOF
-          echo "                          <a href=\"${PT_PDF}\" class=\"btn btn-secondary\" aria-label=\"Ver CV em Português em PDF\">" >> public/index.html
-          cat >> public/index.html << 'INDEXEOF'
+                          <a href="${PT_PDF}" class="btn btn-secondary" aria-label="Ver CV em Português em PDF">
                               📑 Baixar PDF
                           </a>
                       </div>
@@ -269,7 +253,7 @@ jobs:
               </div>
           </body>
           </html>
-          INDEXEOF
+          EOF
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
