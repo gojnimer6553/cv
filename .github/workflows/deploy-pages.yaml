@@ -53,17 +53,15 @@ jobs:
         run: |
           mkdir -p public
 
-          # Rename files to use language codes (en.pdf, pt.pdf, etc)
+          # Copy files to public directory (already named with language codes)
           if [ -f artifacts/lang_mapping.txt ]; then
-            while IFS=: read -r PDF_FILE LANG_CODE; do
-              HTML_FILE="${PDF_FILE%.pdf}.html"
+            while IFS=: read -r LANG_CODE ORIGINAL_NAME; do
+              # Files are already named as ${LANG_CODE}.pdf and ${LANG_CODE}.html
+              cp "artifacts/${LANG_CODE}.pdf" "public/${LANG_CODE}.pdf"
+              cp "artifacts/${LANG_CODE}.html" "public/${LANG_CODE}.html"
 
-              # Copy and rename to language code
-              cp "artifacts/${PDF_FILE}" "public/${LANG_CODE}.pdf"
-              cp "artifacts/${HTML_FILE}" "public/${LANG_CODE}.html"
-
-              echo "Renamed: $PDF_FILE -> ${LANG_CODE}.pdf"
-              echo "Renamed: $HTML_FILE -> ${LANG_CODE}.html"
+              echo "Copied: ${LANG_CODE}.pdf (original: $ORIGINAL_NAME)"
+              echo "Copied: ${LANG_CODE}.html"
             done < artifacts/lang_mapping.txt
           fi
 
@@ -99,7 +97,7 @@ jobs:
 
           # Generate rows for each language
           if [ -f artifacts/lang_mapping.txt ]; then
-            while IFS=: read -r PDF_FILE LANG_CODE; do
+            while IFS=: read -r LANG_CODE ORIGINAL_NAME; do
               # Get display name from mapping, fallback to code
               LANG_DISPLAY="${LANG_NAMES[$LANG_CODE]:-$LANG_CODE}"
 
@@ -194,7 +192,7 @@ jobs:
 
           # Generate table rows using language mapping
           if [ -f artifacts/lang_mapping.txt ]; then
-            while IFS=: read -r PDF_FILE LANG_CODE; do
+            while IFS=: read -r LANG_CODE ORIGINAL_NAME; do
               # Get display name from mapping, fallback to code
               LANG_DISPLAY="${LANG_NAMES[$LANG_CODE]:-$LANG_CODE}"
 
@@ -274,7 +272,7 @@ jobs:
 
           # Generate summary rows using language mapping
           if [ -f artifacts/lang_mapping.txt ]; then
-            while IFS=: read -r PDF_FILE LANG_CODE; do
+            while IFS=: read -r LANG_CODE ORIGINAL_NAME; do
               # Get display name from mapping, fallback to code
               LANG_DISPLAY="${LANG_NAMES[$LANG_CODE]:-$LANG_CODE}"
 

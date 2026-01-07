@@ -51,7 +51,7 @@ jobs:
               # Render the CV
               rendercv render "$yaml"
 
-              # Find the generated PDF and copy it immediately with language code
+              # Find the generated PDF and copy with language code as filename
               PDF_FILE=$(ls rendercv_output/*.pdf | head -1)
               HTML_FILE=$(ls rendercv_output/*.html | head -1)
 
@@ -59,56 +59,20 @@ jobs:
                 PDF_NAME=$(basename "$PDF_FILE")
                 HTML_NAME=$(basename "$HTML_FILE")
 
-                # Copy to parent with language-specific name to avoid overwriting
-                cp "$PDF_FILE" "../${LANG_CODE}_temp.pdf"
-                cp "$HTML_FILE" "../${LANG_CODE}_temp.html"
+                # Copy to artifacts with language code as filename
+                cp "$PDF_FILE" "../artifacts/${LANG_CODE}.pdf"
+                cp "$HTML_FILE" "../artifacts/${LANG_CODE}.html"
 
-                # Map original filename to language code
-                echo "$PDF_NAME:$LANG_CODE" >> ../lang_mapping.txt
-                echo "Built and mapped: $PDF_NAME -> $LANG_CODE"
+                # Map language code to original filename (for display in summaries)
+                echo "${LANG_CODE}:${PDF_NAME}" >> ../artifacts/lang_mapping.txt
+                echo "Built: $LANG_CODE -> ${LANG_CODE}.pdf (original: $PDF_NAME)"
               fi
             fi
           done
 
-          # Move temp files back to rendercv_output for copying step
-          cd ..
-          mkdir -p languages/rendercv_output
-          mv *_temp.pdf languages/rendercv_output/ 2>/dev/null || true
-          mv *_temp.html languages/rendercv_output/ 2>/dev/null || true
-
-          # Rename back to original names
-          cd languages/rendercv_output
-          for file in *_temp.pdf; do
-            if [ -f "$file" ]; then
-              LANG_CODE="${file%_temp.pdf}"
-              # Get original name from mapping
-              ORIGINAL=$(grep ":${LANG_CODE}$" ../../lang_mapping.txt | cut -d: -f1)
-              mv "$file" "$ORIGINAL"
-            fi
-          done
-
-          for file in *_temp.html; do
-            if [ -f "$file" ]; then
-              LANG_CODE="${file%_temp.html}"
-              ORIGINAL=$(grep ":${LANG_CODE}$" ../../lang_mapping.txt | cut -d: -f1)
-              ORIGINAL_HTML="${ORIGINAL%.pdf}.html"
-              mv "$file" "$ORIGINAL_HTML"
-            fi
-          done
-
-      - name: Copy build artifacts
-        run: |
-          # Copy all PDFs and HTML files recursively
-          find languages/rendercv_output -name "*.pdf" -exec cp {} artifacts/ \;
-          find languages/rendercv_output -name "*.html" -exec cp {} artifacts/ \;
-
-          # Copy language mapping
-          if [ -f lang_mapping.txt ]; then
-            cp lang_mapping.txt artifacts/
-          fi
-
-          echo "Copied artifacts:"
-          ls -lh artifacts/
+          echo ""
+          echo "All artifacts:"
+          ls -lh ../artifacts/
 
       - name: Generate metadata
         run: |
@@ -157,9 +121,8 @@ jobs:
 
           # Display mapping
           if [ -f artifacts/lang_mapping.txt ]; then
-            while IFS=: read -r PDF_FILE LANG_CODE; do
-              HTML_FILE="${PDF_FILE%.pdf}.html"
-              echo "  [$LANG_CODE] $PDF_FILE + $HTML_FILE"
+            while IFS=: read -r LANG_CODE ORIGINAL_NAME; do
+              echo "  [$LANG_CODE] ${LANG_CODE}.pdf (original: $ORIGINAL_NAME)"
             done < artifacts/lang_mapping.txt
           fi
 
@@ -188,8 +151,9 @@ jobs:
 
           # Generate rows from language mapping
           if [ -f artifacts/lang_mapping.txt ]; then
-            while IFS=: read -r PDF_FILE LANG_CODE; do
-              HTML_FILE="${PDF_FILE%.pdf}.html"
+            while IFS=: read -r LANG_CODE ORIGINAL_NAME; do
+              PDF_FILE="${LANG_CODE}.pdf"
+              HTML_FILE="${LANG_CODE}.html"
               PDF_SIZE=$(du -h "artifacts/${PDF_FILE}" | cut -f1)
               HTML_SIZE=$(du -h "artifacts/${HTML_FILE}" | cut -f1)
 
