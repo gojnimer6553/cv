@@ -1,73 +1,76 @@
 cv:
-  name: John Doe
+  name: Guilherme Nimer Gojlevicius
   location: São Paulo, Brazil
-  email: john.doe@example.com
-  phone: "+55 11 99999-9999"
-  website: https://johndoe.com
+  email: gojnimer@gmail.com
   social_networks:
     - network: LinkedIn
-      username: johndoe
-    - network: GitHub
-      username: johndoe
-  headline: Software Engineer
-  summary: Experienced software engineer with 5+ years of expertise in full-stack development. Passionate about building scalable applications and solving complex technical challenges.
+      username: gojnimer
+  headline: Senior Frontend Developer
+  summary: Senior front-end developer with solid experience in scalable web applications. Over 7 years of experience in front-end development. I create robust, high-performance web and mobile applications, mastering modern frameworks — React, Next.js, Remix, Astro, Angular, Node.js and TypeScript — and Micro Frontend (MFE) architecture. I have a track record of leading standardization and performance optimization initiatives in critical projects, always seeking to use the most current technologies. I have experience in highly regulated sectors such as healthcare and finance, integrating complex systems and ensuring security and usability.
 
   sections:
     experience:
-      - company: Tech Company Inc.
-        position: Senior Software Engineer
-        location: São Paulo, Brazil
-        start_date: 2021-03
+      - company: Hospital Israelita Albert Einstein
+        position: Senior Frontend Developer
+        start_date: 2021-08
         end_date: present
         highlights:
-          - Led development of microservices architecture serving 1M+ users
-          - Reduced API response time by 40% through optimization and caching strategies
-          - Mentored 5 junior developers and conducted code reviews
+          - Implemented a dynamic medical forms framework, consolidating various legacy projects into a single configurable platform
+          - Standardized and modernized MFE architecture, improving scalability and facilitating maintenance of the hospital's internal systems
+          - Integrated medical record services and medical systems, ensuring real-time data exchange and greater fluidity in care
 
-      - company: StartUp Solutions
-        position: Full Stack Developer
-        location: São Paulo, Brazil
-        start_date: 2019-01
-        end_date: 2021-02
+      - company: BOLD Brasil
+        position: Senior Frontend Developer
+        start_date: 2021-12
+        end_date: present
         highlights:
-          - Developed RESTful APIs using Node.js and Express
-          - Built responsive front-end applications with React and TypeScript
-          - Implemented CI/CD pipelines reducing deployment time by 60%
+          - Frontend solutions development for financial platform
+
+      - company: Bradesco
+        position: Senior Frontend Developer
+        start_date: 2020-06
+        end_date: 2021-08
+        highlights:
+          - Responsible for the Notifications area of Bradesco's main mobile app, developing user communication functionalities
+          - Used Angular and React Native in MFE architecture, ensuring accuracy and agility in notifications
+          - Collaborated directly with backend teams to orchestrate sensitive message dispatches such as transactions and fraud alerts
+          - Developed authorization and notification configuration screens, offering control and usability to customers
+          - Contributed to a project used by millions of account holders during strong digital banking growth in Brazil
+
+      - company: Foursys
+        position: Frontend Developer
+        location: São Paulo, Brazil
+        start_date: 2020-02
+        end_date: 2020-06
+        highlights:
+          - Frontend solutions development
+
+      - company: Fullware Tecnologia De Sistemas
+        position: Mobile Developer (C# / Xamarin Forms)
+        start_date: 2018-06
+        end_date: 2020-02
+        highlights:
+          - Mobile and web development using C#, .NET Core and Xamarin Forms
+          - CRM systems that helped improve sales and service processes
 
     education:
-      - institution: University of São Paulo
-        area: Computer Science
+      - institution: FIAP
+        area: Information Systems
         degree: Bachelor's Degree
-        start_date: 2015-01
-        end_date: 2018-12
-        highlights:
-          - "GPA: 3.8/4.0"
-          - "Relevant coursework: Data Structures, Algorithms, Database Systems"
+        start_date: 2020
+        end_date: 2025
 
     skills:
-      - label: Programming Languages
-        details: JavaScript, TypeScript, Python, Go, Java
+      - label: Core Competencies
+        details: JavaScript, React.js, Software Development
       - label: Frameworks & Libraries
-        details: React, Node.js, Express, FastAPI, Spring Boot
-      - label: Databases
-        details: PostgreSQL, MongoDB, Redis
-      - label: DevOps & Tools
-        details: Docker, Kubernetes, GitHub Actions, AWS, Git
-      - label: Languages
-        details: Portuguese (Native), English (Fluent), Spanish (Intermediate)
-
-    projects:
-      - name: Open Source Contribution - React Native Library
-        date: 2023
-        highlights:
-          - Contributed features and bug fixes to popular React Native UI library
-          - Improved documentation and added TypeScript definitions
-
-      - name: Personal Portfolio & Blog
-        date: 2022
-        highlights:
-          - Built with Next.js and deployed on Vercel
-          - Integrated with headless CMS for content management
+        details: React, Next.js, Remix, Astro, Angular, Node.js, TypeScript
+      - label: Architecture
+        details: Micro Frontends (MFE)
+      - label: Mobile
+        details: React Native, Xamarin Forms
+      - label: Backend
+        details: C#, .NET Core
 
 design:
   theme: classic

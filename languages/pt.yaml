@@ -1,73 +1,76 @@
 cv:
-  name: Joao Silva
+  name: Guilherme Nimer Gojlevicius
   location: São Paulo, Brasil
-  email: joao.silva@exemplo.com
-  phone: "+55 11 99999-9999"
-  website: https://joaosilva.com
+  email: gojnimer@gmail.com
   social_networks:
     - network: LinkedIn
-      username: joaosilva
-    - network: GitHub
-      username: joaosilva
-  headline: Engenheiro de Software
-  summary: Engenheiro de software experiente com mais de 5 anos de expertise em desenvolvimento full-stack. Apaixonado por construir aplicações escaláveis e resolver desafios técnicos complexos.
+      username: gojnimer
+  headline: Desenvolvedor Frontend Sênior
+  summary: Desenvolvedor front-end sênior com experiência sólida em aplicações web escaláveis. Tenho mais de 7 anos de experiência em desenvolvimento front-end. Crio aplicações web e mobile robustas e de alta performance, dominando frameworks modernos — React, Next.js, Remix, Astro, Angular, Node.js e TypeScript — e arquitetura de Micro Frontends (MFE). Tenho histórico de liderar iniciativas de padronização e otimização de performance em projetos críticos, sempre buscando utilizar as tecnologias mais atuais. Possuo experiência em setores altamente regulados, como saúde e finanças, integrando sistemas complexos e garantindo segurança e usabilidade.
 
   sections:
     experience:
-      - company: Tech Company Inc.
-        position: Engenheiro de Software Sênior
-        location: São Paulo, Brasil
-        start_date: 2021-03
+      - company: Hospital Israelita Albert Einstein
+        position: Desenvolvedor Frontend Sênior
+        start_date: 2021-08
         end_date: present
         highlights:
-          - Liderou desenvolvimento de arquitetura de microserviços atendendo mais de 1M de usuários
-          - Reduziu tempo de resposta de APIs em 40% através de otimizações e estratégias de cache
-          - Mentorou 5 desenvolvedores júnior e conduziu revisões de código
+          - Implantei um framework de formulários médicos dinâmicos, consolidando diversos projetos legados em uma única plataforma configurável
+          - Padronizei e modernizei a arquitetura de MFE, melhorando a escalabilidade e facilitando a manutenção dos sistemas internos do hospital
+          - Integrei serviços de prontuário e sistemas médicos, garantindo troca de dados em tempo real e maior fluidez no atendimento
 
-      - company: StartUp Solutions
-        position: Desenvolvedor Full Stack
-        location: São Paulo, Brasil
-        start_date: 2019-01
-        end_date: 2021-02
+      - company: BOLD Brasil
+        position: Desenvolvedor Frontend Sênior
+        start_date: 2021-12
+        end_date: present
         highlights:
-          - Desenvolveu APIs RESTful usando Node.js e Express
-          - Construiu aplicações front-end responsivas com React e TypeScript
-          - Implementou pipelines de CI/CD reduzindo tempo de deploy em 60%
+          - Desenvolvimento de soluções frontend para plataforma financeira
+
+      - company: Bradesco
+        position: Desenvolvedor Frontend Sênior
+        start_date: 2020-06
+        end_date: 2021-08
+        highlights:
+          - Responsável pela área de Notificações do app mobile principal do Bradesco, desenvolvendo funcionalidades de comunicação com usuários
+          - Utilizei Angular e React Native em arquitetura MFE, garantindo precisão e agilidade nas notificações
+          - Colaborei com equipes de backend para orquestrar disparos de mensagens sensíveis, como transações e alertas de fraude
+          - Desenvolvi telas de autorização e configuração de notificações, oferecendo controle e usabilidade aos clientes
+          - Contribuí em projeto utilizado por milhões de correntistas durante forte crescimento da bancarização digital no Brasil
+
+      - company: Foursys
+        position: Desenvolvedor Frontend
+        location: São Paulo, Brasil
+        start_date: 2020-02
+        end_date: 2020-06
+        highlights:
+          - Desenvolvimento de soluções frontend
+
+      - company: Fullware Tecnologia De Sistemas
+        position: Desenvolvedor Mobile (C# / Xamarin Forms)
+        start_date: 2018-06
+        end_date: 2020-02
+        highlights:
+          - Desenvolvimento mobile e web usando C#, .NET Core e Xamarin Forms
+          - Sistemas de CRM que ajudaram a melhorar processos de vendas e atendimento
 
     education:
-      - institution: Universidade de São Paulo
-        area: Ciência da Computação
+      - institution: FIAP
+        area: Sistema da Informação
         degree: Bacharelado
-        start_date: 2015-01
-        end_date: 2018-12
-        highlights:
-          - "Média: 3.8/4.0"
-          - "Disciplinas relevantes: Estruturas de Dados, Algoritmos, Sistemas de Banco de Dados"
+        start_date: 2020
+        end_date: 2025
 
     skills:
-      - label: Linguagens de Programação
-        details: JavaScript, TypeScript, Python, Go, Java
+      - label: Principais Competências
+        details: JavaScript, React.js, Desenvolvimento de Software
       - label: Frameworks e Bibliotecas
-        details: React, Node.js, Express, FastAPI, Spring Boot
-      - label: Bancos de Dados
-        details: PostgreSQL, MongoDB, Redis
-      - label: DevOps e Ferramentas
-        details: Docker, Kubernetes, GitHub Actions, AWS, Git
-      - label: Idiomas
-        details: Português (Nativo), Inglês (Fluente), Espanhol (Intermediário)
-
-    projects:
-      - name: Contribuição Open Source - Biblioteca React Native
-        date: 2023
-        highlights:
-          - Contribuiu com funcionalidades e correções de bugs para biblioteca popular de UI React Native
-          - Melhorou documentação e adicionou definições TypeScript
-
-      - name: Portfólio Pessoal e Blog
-        date: 2022
-        highlights:
-          - Construído com Next.js e hospedado no Vercel
-          - Integrado com CMS headless para gerenciamento de conteúdo
+        details: React, Next.js, Remix, Astro, Angular, Node.js, TypeScript
+      - label: Arquitetura
+        details: Micro Frontends (MFE)
+      - label: Mobile
+        details: React Native, Xamarin Forms
+      - label: Backend
+        details: C#, .NET Core
 
 design:
   theme: classic
