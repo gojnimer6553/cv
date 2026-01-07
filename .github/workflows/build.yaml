@@ -10,28 +10,12 @@ on:
       artifact-name:
         description: "Name of the uploaded artifact"
         value: ${{ jobs.build.outputs.artifact-name }}
-      en-pdf-name:
-        description: "Filename of the English CV PDF"
-        value: ${{ jobs.build.outputs.en-pdf-name }}
-      pt-pdf-name:
-        description: "Filename of the Portuguese CV PDF"
-        value: ${{ jobs.build.outputs.pt-pdf-name }}
-      en-html-name:
-        description: "Filename of the English CV HTML"
-        value: ${{ jobs.build.outputs.en-html-name }}
-      pt-html-name:
-        description: "Filename of the Portuguese CV HTML"
-        value: ${{ jobs.build.outputs.pt-html-name }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
       artifact-name: cv-build-${{ github.run_number }}
-      en-pdf-name: ${{ steps.detect-files.outputs.en-pdf-name }}
-      pt-pdf-name: ${{ steps.detect-files.outputs.pt-pdf-name }}
-      en-html-name: ${{ steps.detect-files.outputs.en-html-name }}
-      pt-html-name: ${{ steps.detect-files.outputs.pt-html-name }}
 
     steps:
       - name: Checkout repository
@@ -86,40 +70,6 @@ jobs:
 
           echo "Copied artifacts:"
           ls -lh artifacts/
-
-      - name: Detect generated files
-        id: detect-files
-        run: |
-          echo "Detected files from language mapping:"
-
-          # Read first two entries from lang_mapping for backwards compatibility
-          # (Some workflows might still expect en/pt outputs)
-          FIRST_PDF=""
-          FIRST_HTML=""
-          SECOND_PDF=""
-          SECOND_HTML=""
-
-          LINE_NUM=0
-          while IFS=: read -r PDF_FILE LANG_CODE; do
-            LINE_NUM=$((LINE_NUM + 1))
-            HTML_FILE="${PDF_FILE%.pdf}.html"
-
-            if [ $LINE_NUM -eq 1 ]; then
-              FIRST_PDF="$PDF_FILE"
-              FIRST_HTML="$HTML_FILE"
-              echo "  First CV: $PDF_FILE ($LANG_CODE)"
-            elif [ $LINE_NUM -eq 2 ]; then
-              SECOND_PDF="$PDF_FILE"
-              SECOND_HTML="$HTML_FILE"
-              echo "  Second CV: $PDF_FILE ($LANG_CODE)"
-            fi
-          done < artifacts/lang_mapping.txt
-
-          # Output for backwards compatibility (will be first and second CVs found)
-          echo "en-pdf-name=$FIRST_PDF" >> $GITHUB_OUTPUT
-          echo "en-html-name=$FIRST_HTML" >> $GITHUB_OUTPUT
-          echo "pt-pdf-name=$SECOND_PDF" >> $GITHUB_OUTPUT
-          echo "pt-html-name=$SECOND_HTML" >> $GITHUB_OUTPUT
 
       - name: Generate metadata
         run: |
