@@ -307,7 +307,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📝 Quick Links" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- 🔗 [English HTML](${ PAGES_URL}?lang=en&format=html)" >> $GITHUB_STEP_SUMMARY
+          echo "- 🔗 [English HTML](${PAGES_URL}?lang=en&format=html)" >> $GITHUB_STEP_SUMMARY
           echo "- 🔗 [Portuguese HTML](${PAGES_URL}?lang=pt&format=html)" >> $GITHUB_STEP_SUMMARY
           echo "- 🔗 [English PDF](${PAGES_URL}?lang=en&format=pdf)" >> $GITHUB_STEP_SUMMARY
           echo "- 🔗 [Portuguese PDF](${PAGES_URL}?lang=pt&format=pdf)" >> $GITHUB_STEP_SUMMARY
