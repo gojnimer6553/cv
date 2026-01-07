@@ -1,12 +1,6 @@
 name: Build CVs
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - 'languages/**'
-      - '.github/workflows/build.yaml'
   pull_request:
     paths:
       - 'languages/**'
