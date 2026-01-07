@@ -3,7 +3,7 @@ name: Build CVs
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - 'languages/**'
       - '.github/workflows/build.yaml'
@@ -46,7 +46,7 @@ jobs:
           cache: 'pip'
 
       - name: Install RenderCV
-        run: pip install "rendercv[full]"
+        run: pip install -r requirements.txt
 
       - name: Create artifacts directory
         run: mkdir -p artifacts
