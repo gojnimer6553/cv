@@ -45,12 +45,14 @@ echo ""
 # Copy artifacts
 echo -e "${BLUE}Copying artifacts to output directory...${NC}"
 
-cp languages/rendercv_output/John_Doe_CV.pdf "$OUTPUT_DIR/"
-cp languages/rendercv_output/John_Doe_CV.html "$OUTPUT_DIR/"
-cp languages/rendercv_output/João_Silva_CV.pdf "$OUTPUT_DIR/"
-cp languages/rendercv_output/João_Silva_CV.html "$OUTPUT_DIR/"
+# Copy all PDFs and HTML files recursively
+find languages/rendercv_output -name "*.pdf" -exec cp {} "$OUTPUT_DIR/" \;
+find languages/rendercv_output -name "*.html" -exec cp {} "$OUTPUT_DIR/" \;
 
-echo -e "${GREEN}✓${NC} Artifacts copied"
+PDF_COUNT=$(ls "$OUTPUT_DIR"/*.pdf 2>/dev/null | wc -l)
+HTML_COUNT=$(ls "$OUTPUT_DIR"/*.html 2>/dev/null | wc -l)
+
+echo -e "${GREEN}✓${NC} Copied $PDF_COUNT PDF(s) and $HTML_COUNT HTML file(s)"
 echo ""
 
 # Generate metadata

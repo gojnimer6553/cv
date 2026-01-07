@@ -18,22 +18,26 @@ on:
         value: ${{ jobs.build.outputs.artifact-name }}
       en-pdf-name:
         description: "Filename of the English CV PDF"
-        value: John_Doe_CV.pdf
+        value: ${{ jobs.build.outputs.en-pdf-name }}
       pt-pdf-name:
         description: "Filename of the Portuguese CV PDF"
-        value: Joao_Silva_CV.pdf
+        value: ${{ jobs.build.outputs.pt-pdf-name }}
       en-html-name:
         description: "Filename of the English CV HTML"
-        value: John_Doe_CV.html
+        value: ${{ jobs.build.outputs.en-html-name }}
       pt-html-name:
         description: "Filename of the Portuguese CV HTML"
-        value: Joao_Silva_CV.html
+        value: ${{ jobs.build.outputs.pt-html-name }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
       artifact-name: cv-build-${{ github.run_number }}
+      en-pdf-name: ${{ steps.detect-files.outputs.en-pdf-name }}
+      pt-pdf-name: ${{ steps.detect-files.outputs.pt-pdf-name }}
+      en-html-name: ${{ steps.detect-files.outputs.en-html-name }}
+      pt-html-name: ${{ steps.detect-files.outputs.pt-html-name }}
 
     steps:
       - name: Checkout repository
@@ -63,13 +67,34 @@ jobs:
 
       - name: Copy build artifacts
         run: |
-          # Copy PDFs
-          cp languages/rendercv_output/John_Doe_CV.pdf artifacts/
-          cp languages/rendercv_output/João_Silva_CV.pdf artifacts/
+          # Copy all PDFs and HTML files recursively
+          find languages/rendercv_output -name "*.pdf" -exec cp {} artifacts/ \;
+          find languages/rendercv_output -name "*.html" -exec cp {} artifacts/ \;
 
-          # Copy HTML files
-          cp languages/rendercv_output/John_Doe_CV.html artifacts/
-          cp languages/rendercv_output/João_Silva_CV.html artifacts/
+          echo "Copied artifacts:"
+          ls -lh artifacts/
+
+      - name: Detect generated files
+        id: detect-files
+        run: |
+          # Find English files (assuming they don't contain Portuguese patterns)
+          EN_PDF=$(cd artifacts && ls *.pdf | grep -v -i "silva\|joao\|joão" | head -1)
+          EN_HTML=$(cd artifacts && ls *.html | grep -v -i "silva\|joao\|joão" | head -1)
+
+          # Find Portuguese files
+          PT_PDF=$(cd artifacts && ls *.pdf | grep -i "silva\|joao\|joão" | head -1)
+          PT_HTML=$(cd artifacts && ls *.html | grep -i "silva\|joao\|joão" | head -1)
+
+          echo "Detected files:"
+          echo "  English PDF: $EN_PDF"
+          echo "  English HTML: $EN_HTML"
+          echo "  Portuguese PDF: $PT_PDF"
+          echo "  Portuguese HTML: $PT_HTML"
+
+          echo "en-pdf-name=$EN_PDF" >> $GITHUB_OUTPUT
+          echo "en-html-name=$EN_HTML" >> $GITHUB_OUTPUT
+          echo "pt-pdf-name=$PT_PDF" >> $GITHUB_OUTPUT
+          echo "pt-html-name=$PT_HTML" >> $GITHUB_OUTPUT
 
       - name: Generate metadata
         run: |
@@ -88,32 +113,35 @@ jobs:
           EOF
 
       - name: Verify artifacts exist
+        env:
+          EN_PDF: ${{ steps.detect-files.outputs.en-pdf-name }}
+          PT_PDF: ${{ steps.detect-files.outputs.pt-pdf-name }}
+          EN_HTML: ${{ steps.detect-files.outputs.en-html-name }}
+          PT_HTML: ${{ steps.detect-files.outputs.pt-html-name }}
         run: |
           echo "Checking for required artifacts..."
 
-          if [ ! -f artifacts/John_Doe_CV.pdf ]; then
-            echo "❌ Error: English CV PDF not found"
+          PDF_COUNT=$(ls artifacts/*.pdf 2>/dev/null | wc -l)
+          HTML_COUNT=$(ls artifacts/*.html 2>/dev/null | wc -l)
+
+          if [ "$PDF_COUNT" -lt 2 ]; then
+            echo "❌ Error: Expected 2 PDF files, found $PDF_COUNT"
             exit 1
           fi
 
-          if [ ! -f artifacts/João_Silva_CV.pdf ]; then
-            echo "❌ Error: Portuguese CV PDF not found"
-            exit 1
-          fi
-
-          if [ ! -f artifacts/John_Doe_CV.html ]; then
-            echo "❌ Error: English CV HTML not found"
-            exit 1
-          fi
-
-          if [ ! -f artifacts/João_Silva_CV.html ]; then
-            echo "❌ Error: Portuguese CV HTML not found"
+          if [ "$HTML_COUNT" -lt 2 ]; then
+            echo "❌ Error: Expected 2 HTML files, found $HTML_COUNT"
             exit 1
           fi
 
           echo "✅ All required artifacts present"
           echo ""
           echo "Generated files:"
+          echo "  English PDF: $EN_PDF"
+          echo "  English HTML: $EN_HTML"
+          echo "  Portuguese PDF: $PT_PDF"
+          echo "  Portuguese HTML: $PT_HTML"
+          echo ""
           ls -lh artifacts/
 
       - name: Upload CV artifacts
@@ -126,6 +154,11 @@ jobs:
           compression-level: 9
 
       - name: Build summary
+        env:
+          EN_PDF: ${{ steps.detect-files.outputs.en-pdf-name }}
+          PT_PDF: ${{ steps.detect-files.outputs.pt-pdf-name }}
+          EN_HTML: ${{ steps.detect-files.outputs.en-html-name }}
+          PT_HTML: ${{ steps.detect-files.outputs.pt-html-name }}
         run: |
           echo "## 🔨 Build Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -135,10 +168,10 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| File | Size | Type |" >> $GITHUB_STEP_SUMMARY
           echo "|------|------|------|" >> $GITHUB_STEP_SUMMARY
-          echo "| \`John_Doe_CV.pdf\` | $(du -h artifacts/John_Doe_CV.pdf | cut -f1) | PDF |" >> $GITHUB_STEP_SUMMARY
-          echo "| \`João_Silva_CV.pdf\` | $(du -h artifacts/João_Silva_CV.pdf | cut -f1) | PDF |" >> $GITHUB_STEP_SUMMARY
-          echo "| \`John_Doe_CV.html\` | $(du -h artifacts/John_Doe_CV.html | cut -f1) | HTML |" >> $GITHUB_STEP_SUMMARY
-          echo "| \`João_Silva_CV.html\` | $(du -h artifacts/João_Silva_CV.html | cut -f1) | HTML |" >> $GITHUB_STEP_SUMMARY
+          echo "| \`${EN_PDF}\` | $(du -h "artifacts/${EN_PDF}" | cut -f1) | PDF |" >> $GITHUB_STEP_SUMMARY
+          echo "| \`${PT_PDF}\` | $(du -h "artifacts/${PT_PDF}" | cut -f1) | PDF |" >> $GITHUB_STEP_SUMMARY
+          echo "| \`${EN_HTML}\` | $(du -h "artifacts/${EN_HTML}" | cut -f1) | HTML |" >> $GITHUB_STEP_SUMMARY
+          echo "| \`${PT_HTML}\` | $(du -h "artifacts/${PT_HTML}" | cut -f1) | HTML |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📦 Artifact" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
